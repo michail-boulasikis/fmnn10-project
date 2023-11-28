@@ -17,6 +17,7 @@ class SturmLiouvilleProblem(object):
     def modes(self):
         A = self._build_matrix()
         eigVal, eigVec = sp.linalg.eig(A)
+        eigVal = np.real(eigVal)
         idx = eigVal.argsort()[::-1]
         eigVal = eigVal[idx]
         eigVec = eigVec[:, idx]
