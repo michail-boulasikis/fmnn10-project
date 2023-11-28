@@ -17,7 +17,7 @@ class StaticBeam:
 
     
     def I(self,x):
-        I = 10e-3*(3-2*np.cos(np.pi*x/self.L)**12)
+        I = 1e-3*(3-2*np.cos(np.pi*x/self.L)**12)
         self.I = I
         return I
     
@@ -38,15 +38,17 @@ class StaticBeam:
         bvp_u.solve()
         self.u = bvp_u.y
         
-        
     
-N = 999
-beam = StaticBeam()
-beam.solve(N)
+if __name__ == '__main__':  
+    
+    N = 999
+    beam = StaticBeam()
+    beam.solve(N)
+    fig , axs = plt.subplots(figsize = (5,2))
+    axs.plot(beam.x,beam.u)
+    axs.axvline(beam.x[int((N+1)/2)],linestyle = 'dotted', color = 'red')
+    axs.set(xlabel = 'x / m',
+               ylabel = 'u(x) / m')
+    print(f'Deformation at the middle point: {beam.u[int((N+1)/2)]} m')
 
-plt.plot(beam.x,beam.u)
-plt.axvline(beam.x[int((N+1)/2)],linestyle = 'dotted', color = 'red')
-
-print(f'Deformation at the middle point: {beam.u[500]}')
-
-        
+            
