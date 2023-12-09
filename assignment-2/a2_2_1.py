@@ -31,3 +31,6 @@ if __name__ == '__main__':
     plt.xlabel("$\\Delta x$")
     plt.ylabel("Error")
     plt.show()
+    prob_2 = sturm_liouville.SturmLiouvilleProblem(lambda x: np.zeros_like(x))
+    x, v, _ = prob_2.modes()
+    print(v[:3])
