@@ -58,6 +58,8 @@ def S(n,delta_x, direction = 'bwd',circulant = False):
     S*= 1/delta_x
     return S
 
+
+
 if __name__ == '__main__':
     T_dx = T(5,1,True)
     print("--- Testing a circulant T ---")
