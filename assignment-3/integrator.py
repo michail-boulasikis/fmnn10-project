@@ -104,6 +104,14 @@ class AdaptiveIntegrator(object):
         return np.array(self.t), np.array(self.y), np.array(self.h), np.array(self.err)
 
 
+class EulerIntegrator(Integrator):
+    def step(self, i):
+        return self.y[i - 1, :] + self.h * self.f @ self.y[i - 1, :]
+
+    def error_est(self):
+        return 0.0
+
+
 def error_data_last(integrator, _steps=None):
     if issubclass(integrator.__class__, Integrator):
         if _steps is None:
