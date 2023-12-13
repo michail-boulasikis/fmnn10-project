@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 if __name__ == '__main__':
     t0 = 0
     t1 = 1
-    N = 39
-    m = 0.49 #Desired
+    N = 19
+    m = 0.506 #Desired
     x = np.linspace(0, 1, N+2)
     dx = x[1] - x[0]
     dt_desired = m * dx**2 #desired
@@ -36,4 +36,5 @@ if __name__ == '__main__':
     surf = ax.plot_surface(T, X, y_padded)
     plt.xlabel("x")
     plt.ylabel('t')
+    plt.tight_layout()
     plt.show()

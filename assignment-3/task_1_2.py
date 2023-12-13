@@ -34,4 +34,5 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(subplot_kw={"projection" : "3d"})
     T, X = np.meshgrid(x, t)
     surf = ax.plot_surface(T, X, y_padded)
+    plt.tight_layout()
     plt.show()
