@@ -42,7 +42,6 @@ def make_2danimation(x,y,t,title = '',speed = 1):
     
     t_int = t[1]- t[0]
     interval = int(t_int*1000/speed)
-    print(interval)
     animation = anim.FuncAnimation(fig, animate, init_func=init,
                                    frames=len(t),
                                    interval=interval,
