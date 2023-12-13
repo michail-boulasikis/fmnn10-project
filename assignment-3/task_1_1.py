@@ -19,11 +19,13 @@ if __name__ == '__main__':
     y0 = y0[1:-1]
     
     print("------ Diffusion equation ------")
+    print("Explicit Euler method")
     print(f"Integrated in the time interval [{t0},{t1}]")
     print("Parameters:")
     print(f"N = {N} ; M = {M}")
     print(f"dt = {dt:.4g} ; dx = {dx:.4g}; mu = {mu:.8g}")
     print('--------------------------------')
+    
     prob = integrator.EulerIntegrator(matrices.T(N, dx), y0,t0,t1)
     #prob.apply_discretization_scheme(dt)
     prob.apply_discretization_scheme(M)
