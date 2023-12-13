@@ -1,11 +1,10 @@
 import matrices
 import numpy as np
 import custom_anim
-import matplotlib.pyplot as plt
 
 
 def lax_wendroff(un, Tdx, Sdx, dt):
-    return un - (dt * un * (Sdx @ un)) + ((dt * dt / 2) * un * (2 * (Sdx @ un) * (Sdx @ un) + Tdx @ un))
+    return un - (dt * un * (Sdx @ un)) + ((dt * dt / 2) * un * (2 * (Sdx @ un) * (Sdx @ un) + un * un * (Tdx @ un)))
 
 
 def modified_lax_wendroff(un, Tdx, Sdx, dt, inverse, d=0.1):
