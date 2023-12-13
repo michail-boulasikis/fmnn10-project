@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 import integrator
+import custom_anim
 
 
 class LaxWenIntegrator(integrator.Integrator):
@@ -12,9 +13,9 @@ class LaxWenIntegrator(integrator.Integrator):
     def error_est(self):
         return 0.0
 
-a = 1.0
+a = -1.0
 m = 1.0
-N = 49
+N = 19
 col = np.zeros(N)
 col[0] = 1 - a*a*m*m
 col[1] = (a*m/2) * (1 + a*m)
@@ -32,21 +33,7 @@ rms = (1/np.sqrt(N)) * np.linalg.norm(y, axis=1)
 plt.plot(t, rms)
 plt.show()
 
-fig = plt.figure()
-ax = plt.axes(xlim=(0,1), ylim=(-2,2))
-line, = ax.plot([], [], lw=2)
 
 
-def init():
-    line.set_data([], [])
-    return line,
-
-def animate(i):
-    X = x
-    Y = y[i, :]
-    line.set_data(X, Y)
-    return line,
-
-
-animation = anim.FuncAnimation(fig, animate, init_func=init, frames=len(t), interval=1, blit=True)
-plt.show()
+custom_anim.make_2danimation(x,y,t,
+                             f'Advection(a = {a}, $\mu = {m}$)\nusing Lax-Wendroff scheme',1)
