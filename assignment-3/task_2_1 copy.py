@@ -18,6 +18,77 @@ class LaxWenIntegrator(integrator.Integrator):
 t0 = 0
 t1 = 5
 a = -1.0
+m = 1
+N = 49
+col = np.zeros(N)
+col[0] = 1 - a*a*m*m
+col[1] = (a*m/2) * (1 + a*m)
+col[-1] = -(a*m/2) * (1 - a*m)
+C = sp.linalg.circulant(col)
+x = np.linspace(0, 1, N+1)
+x = x[1:]
+dx = x[1] - x[0]
+dt = m * dx
+y0 = np.exp(-100 * (x - 0.5) ** 2)
+prob = LaxWenIntegrator(C, y0, t0=t0, t1=t1)
+prob.apply_discretization_scheme(dt)
+t, y, _ = prob.solve()
+M = len(t)
+
+####Plotting####
+print("--- Advection equation u_t + au_x = 0 ---")
+print(f"a = {a}")
+print(f'Lax-Wendroff scheme integrated for t in [{t[0]:.3g},{t[-1]:.3g}]')
+print("Parameters: ")
+print(f"N = {N} ; M = {len(t)} ; mu = {m}")
+print(f"dt = {dt:.4g} ; dx = {dx:.4g}")
+
+
+
+ax , fig = plt.subplots(figsize = (3,3))
+rms = (1/np.sqrt(N)) * np.linalg.norm(y, axis=1)
+plt.plot(t, rms, label = f'$\\mu = {m}$')
+
+
+
+t0 = 0
+t1 = 5
+a = -1.0
+m = 0.9
+N = 49
+col = np.zeros(N)
+col[0] = 1 - a*a*m*m
+col[1] = (a*m/2) * (1 + a*m)
+col[-1] = -(a*m/2) * (1 - a*m)
+C = sp.linalg.circulant(col)
+x = np.linspace(0, 1, N+1)
+x = x[1:]
+dx = x[1] - x[0]
+dt = m * dx
+y0 = np.exp(-100 * (x - 0.5) ** 2)
+prob = LaxWenIntegrator(C, y0, t0=t0, t1=t1)
+prob.apply_discretization_scheme(dt)
+t, y, _ = prob.solve()
+M = len(t)
+
+####Plotting####
+print("--- Advection equation u_t + au_x = 0 ---")
+print(f"a = {a}")
+print(f'Lax-Wendroff scheme integrated for t in [{t[0]:.3g},{t[-1]:.3g}]')
+print("Parameters: ")
+print(f"N = {N} ; M = {len(t)} ; mu = {m}")
+print(f"dt = {dt:.4g} ; dx = {dx:.4g}")
+
+
+
+
+rms = (1/np.sqrt(N)) * np.linalg.norm(y, axis=1)
+plt.plot(t, rms, label = f'$\\mu = {m}$')
+
+
+t0 = 0
+t1 = 5
+a = -1.0
 m = 0.7
 N = 49
 col = np.zeros(N)
@@ -47,16 +118,18 @@ print(f"dt = {dt:.4g} ; dx = {dx:.4g}")
 
 
 rms = (1/np.sqrt(N)) * np.linalg.norm(y, axis=1)
-plt.plot(t, rms)
+plt.plot(t, rms, label = f'$\\mu = {m}$')
+
+
+
+
 plt.xlabel('t')
 plt.ylabel(r'$||u||_{RMS}$')
+plt.legend()
 plt.show()
 
 
 
-
-custom_anim.make_2danimation(x,y,t,
-                             f'Advection(a = {a}, $\\mu = {m}$)\nusing Lax-Wendroff scheme',1)
 
 
 def characteristic_heatmap(x,y,t,n_ticks = 5):
@@ -85,6 +158,3 @@ def characteristic_heatmap(x,y,t,n_ticks = 5):
     ytick_val = [round(df2.index[ytick_pos[i]],2) for i in range(n_ticks)]
     plt.yticks(ytick_pos, ytick_val)
     plt.title(f'Characteristics, $a={a}$, $\\mu = {m}$.')
-
-characteristic_heatmap(x,y,t)
-plt.show()
